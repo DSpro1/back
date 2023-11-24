@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  Categorias
+  Atividades
 {% endblock %}
 
 {% block css %}
@@ -29,16 +29,7 @@
             </select>
       </div>
 
-      <input type="hidden" name="id">
-
-      <button type="submit" class="btn btn-primary">
-        {% if atividades %}
-            Adicionar 
-        {% else %}
-            Atualizar 
-        {% endif %}
-        Atividade
-      </button>
+      <button type="submit" class="btn btn-primary"></button>
   </form>
   
   {% if atividades %}
@@ -62,12 +53,12 @@
                 <td>{{atividade.status}}</td>
                 
                     <a class="btn btn-warning btn-xs"
-                        href="/atividade/edit/{{atividade.id_atividade}}">
+                        href="/editAtividade/{{atividade.id_atividade}}">
                         <i class="fas fa-edit"></i>
                     EDITAR</a>
                     
                     <a class="btn btn-danger btn-xs"
-                        href="/atividade/delete/{{atividade.id_atividade}}">
+                        href="/del_atividade/{{atividade.id_atividade}}">
                         <i class="far fa-times-circle"></i>
                     EXCLUIR</a>
             

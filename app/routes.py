@@ -47,24 +47,53 @@ def create_casa():
 
 @app.route('/novaAtividade', methods=['POST', 'GET'])
 def novaAtividade():
-   
+    atividades=None
     if request.method=='POST':
    
         nome = request.form['nomeAtividade']
         status = request.form['status']
 
-        atividade = Atividade(id_atividade=5, nome =nome, status=status)
+        atividade = Atividade(nome=nome, status=status)
         db.session.add(atividade)
         db.session.commit()
         return redirect('/listaAtividade')
         #return jsonify({'status': 201, 'message': 'Atividade criada com sucesso'}), 201
    
-    return render_template('/atividade.html')
+    return render_template('/atividade.html', atividades=atividades)
 
 @app.route('/listaAtividade', methods=["GET"])
 def listaAtividade():
     atividades = Atividade.query.all()
-    for i in atividades:
-        print(i.id_atividade, i.nome, i.status)
-    
+    print("atividades: ", atividades)
     return render_template("/atividade.html", atividades=atividades)
+
+
+
+@app.route('/editAtividade/<int:id>', methods=['POST', 'GET'])
+def editAtividade(id):
+    print("id da atividade a ser editada",id)
+    atividade = Atividade.query.get_or_404(id)  # Encontra a atividade pelo ID ou retorna um erro 404 se não existir
+    print(atividade)
+    if request.method == 'POST':
+        atividade.nome = request.form['nomeAtividade']  
+        atividade.status = request.form['status']  
+        db.session.commit()
+
+        return redirect(url_for('listaAtividade'))
+    atividades=atividade
+    print("id_atividade", atividades.id_atividade) #testado e funcionando
+    return render_template('atividade_editar.html', atividades=atividade)
+
+app.route('/del_atividade/<int:id>')
+def del_atividade(id):
+    atividade = Atividade.query.get_or_404(id)  
+
+@app.route('/del_atividade/<int:id>', methods=['POST','GET'])
+def del_atividade(id):
+    atividade = Atividade.query.get_or_404(id)  
+    
+    db.session.delete(atividade)  
+    db.session.commit()  
+    
+    return redirect(url_for('listaAtividade'))  
+

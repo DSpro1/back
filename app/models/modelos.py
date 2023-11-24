@@ -25,8 +25,8 @@ class Atividade(db.Model):
     nome = db.Column(db.String)
     status = db.Column(db.String)
 
-    def __init__(self, id_atividade, nome, status):
-        self.id_atividade=id_atividade
+    def __init__(self, nome, status):
+        
         self.nome=nome
         self.status=status
 

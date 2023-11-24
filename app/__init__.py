@@ -15,5 +15,5 @@ migrate = Migrate(app, db)
 from app import routes
 
 with app.app_context():
-    db.drop_all()
+    
     db.create_all()
